@@ -1,6 +1,7 @@
 import { Router } from "express";
 import {Request, Response} from 'express'
 import { productsRepository } from "../repositories/products-repositories";
+import { inputValidationMiddleware } from "../middlewares/input-validation-middleware";
 
 export const productsRouter = Router({})
 
@@ -18,17 +19,21 @@ productsRouter.get('/:id', (req: Request, res: Response) => {
     }
 })
 
-productsRouter.post('/products', (req: Request, res: Response) => {
+productsRouter.post('/',
+  inputValidationMiddleware,
+  (req: Request, res: Response) => {
     const newProduct = productsRepository.createProducts(req.body.title)
     res.status(201).send(newProduct)
 }) 
 
-productsRouter.put('/:id', (req: Request, res: Response) => {
-  const isUpdated = productsRepository.updateProduct(req.params.id, req.body.title)
-  if(isUpdated) {
-    const product = productsRepository.findProductById(req.params.id)
-    res.send(product)
-  } else {
+productsRouter.put('/:id',
+  inputValidationMiddleware,
+  (req: Request, res: Response) => {
+    const isUpdated = productsRepository.updateProduct(req.params.id, req.body.title)
+    if(isUpdated) {
+      const product = productsRepository.findProductById(req.params.id)
+      res.send(product)
+    } else {
     res.send(404)
   }
 })  
