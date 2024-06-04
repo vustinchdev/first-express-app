@@ -1,3 +1,4 @@
+import { generateId } from "../utils/generateId"
 import { Product, productsCollection } from "./db"
 
 export const productsRepository = {
@@ -14,7 +15,7 @@ export const productsRepository = {
     },
     async createProducts(title: string) {
         const newProduct = {
-            id: (new Date()).toString(), 
+            id: generateId(), 
             title
         }
         await productsCollection.insertOne(newProduct)

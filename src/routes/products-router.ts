@@ -15,7 +15,7 @@ productsRouter.get('/:id', async (req: Request, res: Response) => {
     if(product) {
         res.send(product)
     } else {
-        res.send(404)
+        res.sendStatus(404)
     }
 })
 
@@ -34,15 +34,15 @@ productsRouter.put('/:id',
       const product = await productsRepository.findProductById(req.params.id)
       res.send(product)
     } else {
-    res.send(404)
+    res.sendStatus(404)
   }
 })  
 
 productsRouter.delete('/:id', async (req: Request, res: Response) => {
   const isDeleted = await productsRepository.deleteProduct(req.params.id)
   if(isDeleted) {
-    res.send(204)
+    res.sendStatus(204)
   } else {
-    res.send(404)
+    res.sendStatus(404)
   }
 })  
