@@ -1,4 +1,3 @@
-import { generateId } from "../utils/generateId"
 import { Product, productsCollection } from "./db"
 
 export const productsRepository = {
@@ -13,11 +12,7 @@ export const productsRepository = {
         const product: Product | null = await productsCollection.findOne({id: id})
         return product
     },
-    async createProducts(title: string) {
-        const newProduct = {
-            id: generateId(), 
-            title
-        }
+    async createProducts(newProduct: Product) {
         await productsCollection.insertOne(newProduct)
         return newProduct
     },
